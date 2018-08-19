@@ -20,7 +20,7 @@ jobs:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      test:
+     - test:
   override:
     # start the emulator
     - emulator -avd circleci-android22 -no-audio -no-window:
