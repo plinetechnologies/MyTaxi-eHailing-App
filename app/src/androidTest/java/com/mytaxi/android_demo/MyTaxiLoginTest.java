@@ -17,6 +17,9 @@ import org.junit.Test;
 import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+
+import java.util.HashMap;
+
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.support.test.espresso.action.ViewActions.*;
@@ -35,8 +38,8 @@ public class MyTaxiLoginTest {
     public final RuleChain mRuleChain = RuleChain.outerRule(mActivityRule)
             .around(mRuntimePermissionRule);
 
-    public static String usernamevalue="crazydog335";
-    public static String passwordvalue="venture";
+    public static String usernamevalue;
+    public static String passwordvalue;
 
     private AuthenticationActivity mActivity = null;
 
@@ -47,8 +50,11 @@ public class MyTaxiLoginTest {
     }
 
     @Test
-    public void verifyCustomerLogin()  {
+    public void verifyCustomerLogin() throws Exception {
         Log.i("@Test","Performing Login Test in myTaxi Application using Valid Credentials");
+        HashMap<String,String> credentials=GetLoginCredentials.getLoginCredentials();
+        usernamevalue=credentials.get("Userid");
+        passwordvalue=credentials.get("Pwd");
         Espresso.onView((withId(R.id.edt_username))).perform(ViewActions.typeText(usernamevalue) , closeSoftKeyboard());
         Espresso.onView((withId(R.id.edt_password))).perform(ViewActions.typeText(passwordvalue) , closeSoftKeyboard());
         Espresso.onView((withId(R.id.btn_login))).perform(click());
